@@ -2,8 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#07110c" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CUBA 1962: DEFCON</title>
   <style>
     :root {
@@ -21,8 +20,6 @@
     }
 
     * { box-sizing: border-box; }
-    html { height: 100%; -webkit-text-size-adjust: 100%; }
-    body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
     html, body {
       margin: 0;
       min-height: 100%;
@@ -34,10 +31,6 @@
       font-family: "IBM Plex Mono", "Consolas", monospace;
     }
 
-    @supports (-webkit-touch-callout: none) {
-      html, body { min-height: -webkit-fill-available; }
-    }
-
     .app {
       max-width: 1600px;
       margin: 0 auto;
@@ -46,16 +39,11 @@
       grid-template-rows: auto 1fr auto;
       gap: 16px;
       min-height: 100vh;
-      min-height: 100svh;
-    }
-
-    @supports (-webkit-touch-callout: none) {
-      .app { min-height: -webkit-fill-available; }
     }
 
     .topbar {
       display: grid;
-      grid-template-columns: 1.6fr auto auto auto;
+      grid-template-columns: 1.6fr auto auto;
       gap: 12px;
       align-items: stretch;
     }
@@ -185,7 +173,6 @@
     }
 
     .scene-text p { margin: 0 0 12px; }
-    .scene-title, .scene-text, .choice-title, .choice-desc, .choice-effect, .subtitle, .log-entry, .ending-debrief { overflow-wrap: anywhere; word-break: normal; }
     .scene-text strong { color: var(--cyan); }
 
     .choices {
@@ -194,11 +181,6 @@
     }
 
     .choice {
-      -webkit-appearance: none;
-      appearance: none;
-      touch-action: manipulation;
-      user-select: none;
-      min-height: 44px;
       background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent), var(--panel-2);
       border: 1px solid var(--line);
       color: var(--text);
@@ -362,7 +344,6 @@
       gap: 10px;
       max-height: 240px;
       overflow: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
     .log-entry {
@@ -426,11 +407,6 @@
     }
 
     .control-btn {
-      -webkit-appearance: none;
-      appearance: none;
-      touch-action: manipulation;
-      user-select: none;
-      min-height: 44px;
       padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid var(--line);
@@ -441,13 +417,90 @@
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
 
     .control-btn:hover { border-color: rgba(117,248,255,0.35); }
+    .control-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      border-color: rgba(255,255,255,0.08);
+    }
 
-    @media (max-width: 1366px) {
+    .control-btn.undo-prominent {
+      width: 100%;
+      min-height: 58px;
+      padding: 16px 18px;
+      border-color: rgba(255,191,87,0.62);
+      background: linear-gradient(180deg, rgba(255,191,87,0.14), rgba(255,191,87,0.05) 65%), var(--panel-2);
+      box-shadow: 0 0 0 1px rgba(255,191,87,0.14), 0 0 22px rgba(255,191,87,0.08);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    .control-btn.undo-prominent:hover,
+    .control-btn.undo-prominent:focus-visible {
+      border-color: rgba(255,191,87,0.9);
+      box-shadow: 0 0 0 1px rgba(255,191,87,0.28), 0 0 28px rgba(255,191,87,0.16);
+      transform: translateY(-1px);
+    }
+
+    .control-btn.undo-prominent:active {
+      transform: translateY(0);
+    }
+
+    .intro-hint {
+      margin: 10px 0 4px;
+      color: var(--amber);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      display: none;
+    }
+
+    .choice.intro-choice {
+      border-color: rgba(255,191,87,0.6);
+      background: linear-gradient(180deg, rgba(255,191,87,0.16), rgba(255,191,87,0.06) 60%), var(--panel-2);
+      box-shadow: 0 0 0 1px rgba(255,191,87,0.18), 0 0 24px rgba(255,191,87,0.08);
+      max-width: 560px;
+      margin: 12px auto 0;
+      min-height: 132px;
+    }
+
+    .choice.intro-choice .choice-title {
+      color: var(--amber);
+      font-size: 20px;
+      letter-spacing: 0.12em;
+    }
+
+    .choice.intro-choice .choice-desc {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .choice.intro-choice:hover,
+    .choice.intro-choice:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(255,191,87,0.92);
+      box-shadow: 0 0 0 1px rgba(255,191,87,0.32), 0 0 28px rgba(255,191,87,0.18);
+    }
+
+    .choice.intro-choice:active {
+      transform: translateY(0);
+    }
+
+
+    @media (max-width: 1180px) {
       .main-grid { grid-template-columns: 1fr; }
       .topbar { grid-template-columns: 1fr 1fr; }
+      .control-btn.undo-prominent {
+        min-height: 62px;
+        font-size: 15px;
+      }
     }
 
     @media (max-width: 760px) {
@@ -461,18 +514,11 @@
     <section class="topbar">
       <div class="panel title-panel">
         <div class="eyebrow">Cold War Crisis Simulation</div>
-        <h1 class="title">CUBA 1962: DEFCON</h1>
-        <div class="subtitle">
-          Interaktive Kalter-Krieg-Simulation zur Kubakrise. Zwei Rollen, mehrere Verzweigungen, permanente Eskalationsgefahr.
-        </div>
+        <h1 class="title" id="app-title">CUBA 1962: DEFCON</h1>
       </div>
       <div class="panel stat-chip">
         <div class="label">Datum</div>
         <div class="value" id="top-date">16 OCT 1962</div>
-      </div>
-      <div class="panel stat-chip">
-        <div class="label">Aktueller Knoten</div>
-        <div class="value" id="top-node">N0</div>
       </div>
       <div class="panel stat-chip">
         <div class="label">Am Zug</div>
@@ -487,6 +533,10 @@
           <div class="actor-line" id="scene-actor">Am Zug: SYSTEM</div>
           <h2 class="scene-title" id="scene-title">Intro</h2>
           <p class="scene-text" id="scene-text"></p>
+          <div class="intro-hint" id="intro-hint">Tippe auf den Button, um fortzufahren.</div>
+          <div class="controls" id="scene-controls" style="display:none; justify-content:flex-end; margin-top:10px; margin-bottom:8px;">
+            <button class="control-btn undo-prominent" id="undo-btn" type="button">Letzte Entscheidung zurücknehmen</button>
+          </div>
                     <div class="choices" id="choices"></div>
           <div id="ending-container"></div>
         </div>
@@ -582,7 +632,7 @@
     const DATA = {
       "title": "CUBA 1962: DEFCON",
       "initialState": {
-            "currentNode": "N0",
+            "currentNode": "N00",
             "defcon": 4,
             "usaStrength": 70,
             "ussrStrength": 70,
@@ -593,6 +643,30 @@
       },
       "nodes": [
             {
+                  "id": "N00",
+                  "type": "scene",
+                  "title": "Startbildschirm",
+                  "date": "16 OCT 1962",
+                  "actor": "SYSTEM",
+                  "mapState": "startscreen",
+                  "text": "<p><strong>Willkommen zu CUBA 1962: DEFCON.</strong></p><p>Du spielst eine interaktive Krisensimulation zur Kubakrise. Zuerst erhältst du ein kurzes Briefing, danach triffst du Entscheidungen für die USA und die UdSSR.</p><p><strong>So funktioniert die Simulation:</strong><br>1. Lies das Briefing.<br>2. Tippe unten auf den markierten Hauptbutton, um weiterzugehen.<br>3. Triff im Spiel später politische und militärische Entscheidungen, die den Verlauf der Krise verändern.</p>",
+                  "choices": [
+                        {
+                              "label": "MISSION BEGINNEN",
+                              "description": "Öffnet das historische Briefing zur Ausgangslage der Kubakrise.",
+                              "effects": {
+                                    "defcon": 0,
+                                    "usaStrength": 0,
+                                    "ussrStrength": 0,
+                                    "communication": 0,
+                                    "cubaSafety": 0
+                              },
+                              "next": "N0",
+                              "logText": "Startbildschirm verlassen. Historisches Briefing geöffnet."
+                        }
+                  ]
+            },
+            {
                   "id": "N0",
                   "type": "scene",
                   "title": "Briefing: Historischer Kontext",
@@ -602,7 +676,7 @@
                   "text": "<p>Willkommen im Lagezentrum der <strong>Kubakrise</strong>. Wir befinden uns im Oktober 1962, auf dem Höhepunkt des Kalten Krieges.</p><p><strong>Die Ausgangslage:</strong> Nach der kubanischen Revolution von 1959 regiert <strong>Fidel Castro</strong> auf Kuba. Die Insel orientiert sich zunehmend an der Sowjetunion. Die USA betrachten Kuba nur wenige Kilometer vor Florida als sicherheitspolitische Bedrohung.</p><p><strong>Die Staatsoberhäupter:</strong><br>USA: <strong>John F. Kennedy</strong><br>UdSSR: <strong>Nikita Chruschtschow</strong><br>Kuba: <strong>Fidel Castro</strong></p><p>US-Aufklärungsflugzeuge haben nun sowjetische Raketenstellungen auf Kuba entdeckt. Diese Raketen könnten große Teile der USA erreichen. Die Krise beginnt.</p>",
                   "choices": [
                         {
-                              "label": "Weiter zum DEFCON-Briefing",
+                              "label": "WEITER ZUM DEFCON-TUTORIAL",
                               "description": "Bevor die erste Entscheidung fällt, erhältst du eine kurze Einweisung in das Warn- und Bewertungssystem der Simulation.",
                               "effects": {
                                     "defcon": 0,
@@ -626,7 +700,7 @@
                   "text": "<p><strong>DEFCON</strong> ist die amerikanische Bereitschaftsskala für Streitkräfte. In dieser Simulation zeigt sie den allgemeinen Eskalationsgrad der Krise an.</p><p><strong>DEFCON 5</strong> bedeutet: angespannt, aber stabil.<br><strong>DEFCON 1</strong> bedeutet: nukleare Katastrophe droht.</p><p><strong>Wichtig:</strong> Wenn der DEFCON-Wert in dieser Simulation sinkt, wird die Lage gefährlicher.</p><p>Außerdem werden vier Werte verfolgt:</p><p><strong>Stärke USA:</strong> militärisch-politische Handlungsfähigkeit und Glaubwürdigkeit der USA.<br><strong>Stärke UdSSR:</strong> militärisch-politische Handlungsfähigkeit und Glaubwürdigkeit der Sowjetunion.<br><strong>Kommunikation:</strong> Wie offen diplomatische Kontakte noch sind.<br><strong>Kuba-Sicherheit:</strong> Wie stark Kuba unmittelbar bedroht ist.</p><p>Ab jetzt triffst du Entscheidungen für USA und UdSSR. Jede Entscheidung verändert Werte, spätere Optionen und mögliche Enden.</p>",
                   "choices": [
                         {
-                              "label": "Krise beginnen",
+                              "label": "SIMULATION STARTEN",
                               "description": "Die Simulation startet mit der Entdeckung der Raketen auf Kuba. Präsident Kennedy muss als Erster handeln.",
                               "effects": {
                                     "defcon": 0,
@@ -722,7 +796,7 @@
                                     "communication": -10,
                                     "cubaSafety": 0
                               },
-                              "next": "N8",
+                              "next": "N8B",
                               "logText": "UdSSR: Druck auf Berlin erhöht."
                         },
                         {
@@ -798,7 +872,7 @@
                                     "communication": -5,
                                     "cubaSafety": 0
                               },
-                              "next": "N8",
+                              "next": "N8B",
                               "logText": "UdSSR: Reaktion über die Berlin-Front."
                         }
                   ]
@@ -848,7 +922,7 @@
                                     "communication": -10,
                                     "cubaSafety": 0
                               },
-                              "next": "N8",
+                              "next": "N8A",
                               "logText": "UdSSR: Geheime Gespräche öffentlich gemacht."
                         }
                   ]
@@ -898,7 +972,7 @@
                                     "communication": -10,
                                     "cubaSafety": 0
                               },
-                              "next": "N8",
+                              "next": "N8B",
                               "logText": "UdSSR: Berlin-Ultimatum gestellt."
                         }
                   ]
@@ -1004,17 +1078,17 @@
                   ]
             },
             {
-                  "id": "N8",
+                  "id": "N8A",
                   "type": "scene",
-                  "title": "Druckfront Europa / Prestige",
+                  "title": "Prestige- und innenpolitischer Druck",
                   "date": "26 OCT 1962",
                   "actor": "USA",
-                  "mapState": "berlin_pressure",
-                  "text": "Die Krise weitet sich politisch aus. Berlin, NATO und der innenpolitische Druck verschärfen die Lage. Washington muss entscheiden, wie weit es gehen will.",
+                  "mapState": "public_pressure",
+                  "text": "Die Krise wird öffentlich immer sichtbarer. Nach dem Leak geheimer Gespräche wächst in Washington der Druck, Stärke zu zeigen. Kennedy muss entscheiden, wie er auf den drohenden Prestigeverlust reagiert.",
                   "choices": [
                         {
-                              "label": "NATO-Bereitschaft erhöhen",
-                              "description": "Die USA zeigen militärische Härte gegenüber der gesamten sowjetischen Einflusszone. Das stärkt die Abschreckung, erhöht aber das Kriegsrisiko.",
+                              "label": "Öffentliche Härte demonstrieren",
+                              "description": "Washington zeigt offen Stärke und versucht, den Eindruck von Schwäche zu korrigieren. Das beruhigt innenpolitisch, verschärft aber die Krise.",
                               "effects": {
                                     "defcon": -1,
                                     "usaStrength": 10,
@@ -1022,25 +1096,12 @@
                                     "communication": -5,
                                     "cubaSafety": 0
                               },
-                              "next": "N10C",
-                              "logText": "USA: NATO-Bereitschaft erhöht."
+                              "next": "N10P",
+                              "logText": "USA: Öffentliche Härte demonstriert."
                         },
                         {
-                              "label": "Nur öffentlich drohen",
-                              "description": "Washington setzt vor allem auf Rhetorik und Prestigedruck, ohne sofort neue militärische Schritte einzuleiten.",
-                              "effects": {
-                                    "defcon": 0,
-                                    "usaStrength": 5,
-                                    "ussrStrength": 0,
-                                    "communication": -5,
-                                    "cubaSafety": 0
-                              },
-                              "next": "N10C",
-                              "logText": "USA: Öffentlich mit Gegenmaßnahmen gedroht."
-                        },
-                        {
-                              "label": "Zurück zum Verhandlungskanal",
-                              "description": "Trotz öffentlicher Härte geht Washington zurück in die Diplomatie. Die Krise soll spät noch auf dem Verhandlungsweg entschärft werden.",
+                              "label": "Diplomatie trotz Kritik fortsetzen",
+                              "description": "Die USA nehmen innenpolitische Kritik in Kauf und setzen weiter auf Verhandlungen. Das erhöht die Chance auf Deeskalation.",
                               "effects": {
                                     "defcon": 1,
                                     "usaStrength": -5,
@@ -1048,8 +1109,71 @@
                                     "communication": 10,
                                     "cubaSafety": 0
                               },
-                              "next": "N10B4",
-                              "logText": "USA: Erneut auf Diplomatie gesetzt."
+                              "next": "N10P",
+                              "logText": "USA: Diplomatie trotz Kritik fortgesetzt."
+                        },
+                        {
+                              "label": "Über die UNO politischen Druck erhöhen",
+                              "description": "Washington versucht, den Prestigeverlust durch internationale Unterstützung auszugleichen und Moskau öffentlich unter Druck zu setzen.",
+                              "effects": {
+                                    "defcon": 0,
+                                    "usaStrength": 5,
+                                    "ussrStrength": -5,
+                                    "communication": 5,
+                                    "cubaSafety": 0
+                              },
+                              "next": "N10P",
+                              "logText": "USA: Über die UNO zusätzlichen politischen Druck aufgebaut."
+                        }
+                  ]
+            },
+            {
+                  "id": "N8B",
+                  "type": "scene",
+                  "title": "Europa- und Berlin-Front",
+                  "date": "26 OCT 1962",
+                  "actor": "USA",
+                  "mapState": "berlin_pressure",
+                  "text": "Die Sowjetunion hat den Konflikt bewusst auf Europa ausgeweitet. Berlin und die NATO geraten stärker in den Blick. Washington muss entscheiden, wie es auf diese zweite Front reagiert.",
+                  "choices": [
+                        {
+                              "label": "NATO-Bereitschaft erhöhen",
+                              "description": "Die USA antworten auf den sowjetischen Druck mit militärischer Geschlossenheit im Bündnis. Das stärkt die Abschreckung, erhöht aber das Kriegsrisiko.",
+                              "effects": {
+                                    "defcon": -1,
+                                    "usaStrength": 10,
+                                    "ussrStrength": 0,
+                                    "communication": -5,
+                                    "cubaSafety": 0
+                              },
+                              "next": "N10B",
+                              "logText": "USA: NATO-Bereitschaft erhöht."
+                        },
+                        {
+                              "label": "Nur öffentlich drohen",
+                              "description": "Washington setzt vor allem auf Rhetorik und Prestigedruck, ohne sofort neue militärische Schritte in Europa einzuleiten.",
+                              "effects": {
+                                    "defcon": 0,
+                                    "usaStrength": 5,
+                                    "ussrStrength": 0,
+                                    "communication": -5,
+                                    "cubaSafety": 0
+                              },
+                              "next": "N10B",
+                              "logText": "USA: Öffentlich mit Gegenmaßnahmen in Europa gedroht."
+                        },
+                        {
+                              "label": "Zur Kuba-Diplomatie zurückkehren",
+                              "description": "Trotz des sowjetischen Drucks versucht Washington, die Berlin-Frage nicht weiter aufzublähen und die Krise wieder auf Kuba zu begrenzen.",
+                              "effects": {
+                                    "defcon": 1,
+                                    "usaStrength": -5,
+                                    "ussrStrength": 0,
+                                    "communication": 10,
+                                    "cubaSafety": 0
+                              },
+                              "next": "N10B",
+                              "logText": "USA: Zur Kuba-Diplomatie zurückgekehrt."
                         }
                   ]
             },
@@ -1444,17 +1568,77 @@
                   ]
             },
             {
-                  "id": "N10C",
+                  "id": "N10P",
                   "type": "scene",
-                  "title": "Schlussreaktion auf die Druckfront",
+                  "title": "Schlussreaktion auf Prestige- und politischen Druck",
                   "date": "28 OCT 1962",
                   "actor": "UdSSR",
-                  "mapState": "berlin_and_cuba_pressure",
-                  "text": "Die Krise hat sich auf Prestige, Bündnisse und Europa ausgeweitet. Moskau muss zwischen Rücknahme, Kontrollverlust und Eskalation entscheiden.",
+                  "mapState": "public_pressure_resolution",
+                  "text": "Die Krise ist nun stark von öffentlicher Wahrnehmung und politischem Prestige geprägt. Moskau muss entscheiden, ob es öffentlich weiter zuspitzt oder eine gesichtswahrende Lösung akzeptiert.",
+                  "choices": [
+                        {
+                              "label": "Gesichtswahrenden Kompromiss akzeptieren",
+                              "description": "Die Sowjetunion signalisiert Nachgeben, ohne sich offen geschlagen zu geben. Die Krise endet ohne klare Siegerseite.",
+                              "effects": {
+                                    "defcon": 1,
+                                    "usaStrength": 0,
+                                    "ussrStrength": -5,
+                                    "communication": 10,
+                                    "cubaSafety": 0
+                              },
+                              "next": "E4",
+                              "logText": "UdSSR: Gesichtswahrenden Kompromiss akzeptiert."
+                        },
+                        {
+                              "label": "Öffentliche Härte beibehalten",
+                              "description": "Moskau verweigert das Nachgeben und setzt weiter auf Prestige. Das kann die Krise in offenen Krieg kippen lassen.",
+                              "effects": {
+                                    "defcon": -1,
+                                    "usaStrength": 0,
+                                    "ussrStrength": 10,
+                                    "communication": -10,
+                                    "cubaSafety": 0
+                              },
+                              "branches": [
+                                    {
+                                          "when": {
+                                                "defconLte": 2
+                                          },
+                                          "next": "E5"
+                                    },
+                                    {
+                                          "next": "E4"
+                                    }
+                              ],
+                              "logText": "UdSSR: Öffentliche Härte beibehalten."
+                        },
+                        {
+                              "label": "Geheime Deeskalation trotz harter Rhetorik",
+                              "description": "Nach außen bleibt Moskau hart, im Hintergrund wird aber ein echter Ausweg gesucht. So kann die Krise noch diplomatisch entschärft werden.",
+                              "effects": {
+                                    "defcon": 1,
+                                    "usaStrength": 0,
+                                    "ussrStrength": -5,
+                                    "communication": 10,
+                                    "cubaSafety": 0
+                              },
+                              "next": "E1",
+                              "logText": "UdSSR: Geheime Deeskalation trotz harter Rhetorik eingeleitet."
+                        }
+                  ]
+            },
+            {
+                  "id": "N10B",
+                  "type": "scene",
+                  "title": "Schlussreaktion auf die Europa- und Berlin-Front",
+                  "date": "28 OCT 1962",
+                  "actor": "UdSSR",
+                  "mapState": "berlin_and_europe_pressure",
+                  "text": "Moskau muss entscheiden, ob es den Druck auf Berlin weiter erhöht oder die Kuba-Krise wieder begrenzt. Jetzt zeigt sich, ob die Ausweitung auf Europa nur Drohung war oder zu einer zweiten Front wird.",
                   "choices": [
                         {
                               "label": "Berlin-Druck zurücknehmen und Kuba-Deal akzeptieren",
-                              "description": "Die Sowjetunion lenkt in Europa ein, um wenigstens die Kubakrise zu entschärfen.",
+                              "description": "Die Sowjetunion zieht sich an der Berlin-Front zurück, um wenigstens die Kuba-Krise einzuhegen.",
                               "effects": {
                                     "defcon": 1,
                                     "usaStrength": 0,
@@ -1477,7 +1661,7 @@
                         },
                         {
                               "label": "Berlin weiter eskalieren",
-                              "description": "Moskau beantwortet die Kubakrise mit maximalem Druck in Europa. Damit nähert sich die Krise dem offenen Krieg.",
+                              "description": "Moskau baut den Druck in Europa weiter aus. Damit wächst die Gefahr eines offenen Krieges zwischen den Blöcken.",
                               "effects": {
                                     "defcon": -2,
                                     "usaStrength": 0,
@@ -1499,8 +1683,8 @@
                               "logText": "UdSSR: Berlin weiter eskaliert."
                         },
                         {
-                              "label": "Kuba halten, Europa aber beruhigen",
-                              "description": "Die UdSSR versucht, den Konflikt regional einzuhegen: Kuba bleibt hart umkämpft, Europa soll aber nicht weiter eskalieren.",
+                              "label": "Kuba halten, Europa beruhigen",
+                              "description": "Die Sowjetunion versucht, den Konflikt auf Kuba zu begrenzen und Europa nicht weiter zu destabilisieren. Die Krise bleibt jedoch ungelöst.",
                               "effects": {
                                     "defcon": 0,
                                     "usaStrength": 0,
@@ -1646,18 +1830,26 @@
     const nodesById = Object.fromEntries(DATA.nodes.map(n => [n.id, n]));
     const endingsById = Object.fromEntries(DATA.endings.map(e => [e.id, e]));
 
-    let state = JSON.parse(JSON.stringify(DATA.initialState));
+    function cloneDeep(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    let state = cloneDeep(DATA.initialState);
+    let historyStack = [];
 
     const sceneTitleEl = document.getElementById('scene-title');
     const sceneActorEl = document.getElementById('scene-actor');
     const sceneTextEl = document.getElementById('scene-text');
     const choicesEl = document.getElementById('choices');
     const endingContainerEl = document.getElementById('ending-container');
+    const introHintEl = document.getElementById('intro-hint');
+    const sceneControlsEl = document.getElementById('scene-controls');
+    const undoBtnEl = document.getElementById('undo-btn');
     const logWrapEl = document.getElementById('log-wrap');
 
     const topDateEl = document.getElementById('top-date');
-    const topNodeEl = document.getElementById('top-node');
     const topActorEl = document.getElementById('top-actor');
+    const appTitleEl = document.getElementById('app-title');
 
     const defconCardEl = document.getElementById('defcon-card');
     const defconValueEl = document.getElementById('defcon-value');
@@ -1718,9 +1910,9 @@
       return choice.next;
     }
 
-    function addLogEntry(text, nodeTitle) {
+    function addLogEntry(text, nodeTitle, nodeDate) {
       state.log.unshift({
-        time: `${state.currentNode}`,
+        date: nodeDate || '',
         title: nodeTitle,
         text
       });
@@ -1740,6 +1932,25 @@
 
     function getCurrentEntity() {
       return nodesById[state.currentNode] || endingsById[state.currentNode];
+    }
+
+    function isIntroNodeId(nodeId) {
+      return ['N00','N0','N0B'].includes(nodeId);
+    }
+
+    function isEndingNodeId(nodeId) {
+      return !!endingsById[nodeId];
+    }
+
+    function canUndo() {
+      return historyStack.length > 0 && !isIntroNodeId(state.currentNode);
+    }
+
+    function renderUndoControl() {
+      const showUndo = !isIntroNodeId(state.currentNode);
+      sceneControlsEl.style.display = showUndo ? 'flex' : 'none';
+      undoBtnEl.disabled = !canUndo();
+      undoBtnEl.title = canUndo() ? 'Setzt die letzte Entscheidung zurück.' : 'Noch keine Entscheidung zum Zurücknehmen vorhanden.';
     }
 
     function renderDefcon() {
@@ -1786,7 +1997,7 @@
       state.log.forEach(entry => {
         const div = document.createElement('div');
         div.className = 'log-entry';
-        div.innerHTML = `<small>${entry.time} · ${entry.title}</small>${entry.text}`;
+        div.innerHTML = `<small>${entry.date}${entry.title ? ' · ' + entry.title : ''}</small>${entry.text}`;
         logWrapEl.appendChild(div);
       });
     }
@@ -1795,17 +2006,21 @@
 
     function renderScene(node) {
       topDateEl.textContent = node.date;
-      topNodeEl.textContent = node.id;
       topActorEl.textContent = node.actor;
+      appTitleEl.title = `Aktueller Knoten: ${node.id}`;
       sceneTitleEl.textContent = node.title;
       sceneActorEl.textContent = `Am Zug: ${node.actor}`;
       sceneTextEl.innerHTML = node.text;
       endingContainerEl.innerHTML = '';
       choicesEl.innerHTML = '';
 
+      const isIntroNode = isIntroNodeId(node.id);
+      introHintEl.style.display = isIntroNode ? 'block' : 'none';
+      renderUndoControl();
+
       node.choices.forEach(choice => {
         const btn = document.createElement('button');
-        btn.className = 'choice';
+        btn.className = isIntroNode ? 'choice intro-choice' : 'choice';
         btn.type = 'button';
         const choiceInfo = choice.description || CHOICE_INFO[choice.label] || 'Diese Entscheidung verändert den weiteren Verlauf der Krise und kann spätere Optionen einschränken oder erweitern.';
         btn.innerHTML = `
@@ -1827,12 +2042,14 @@
 
     function renderEnding(ending) {
       topDateEl.textContent = '28 OCT 1962';
-      topNodeEl.textContent = ending.id;
       topActorEl.textContent = 'SIMULATION BEENDET';
+      appTitleEl.title = `Aktueller Knoten: ${ending.id}`;
       sceneTitleEl.textContent = 'Simulation beendet';
       sceneActorEl.textContent = 'Am Zug: Debriefing';
       sceneTextEl.innerHTML = `<p>${ending.text}</p><p style="color: var(--muted); margin-top: 12px;"><strong>Historischer Vergleich:</strong> ${ending.historicalComparison}</p>`;
+      introHintEl.style.display = 'none';
       choicesEl.innerHTML = '';
+      renderUndoControl();
 
       endingContainerEl.innerHTML = `
         <div class="ending-card ${endingClass(ending.resultType)}">
@@ -1859,10 +2076,19 @@
     }
 
     function choose(currentNode, choice) {
+      if (!isIntroNodeId(currentNode.id)) {
+        historyStack.push(cloneDeep(state));
+      }
       applyEffects(choice.effects || {});
-      addLogEntry(choice.logText || choice.label, currentNode.title);
+      addLogEntry(choice.logText || choice.label, currentNode.title, currentNode.date);
       const nextId = resolveNext(choice);
       state.currentNode = nextId;
+      render();
+    }
+
+    function undoLastDecision() {
+      if (!canUndo()) return;
+      state = historyStack.pop();
       render();
     }
 
@@ -1875,6 +2101,8 @@
         sceneTitleEl.textContent = 'Fehler';
         sceneActorEl.textContent = 'Am Zug: System';
         sceneTextEl.textContent = 'Der nächste Knoten konnte nicht geladen werden.';
+        appTitleEl.title = 'Aktueller Knoten: unbekannt';
+        introHintEl.style.display = 'none';
         choicesEl.innerHTML = '';
         endingContainerEl.innerHTML = '<div class="ending-card"><div class="controls"><button class="control-btn" onclick="location.reload()">Neu laden</button></div></div>';
         return;
@@ -1887,10 +2115,14 @@
     }
 
     function restartGame() {
-      state = JSON.parse(JSON.stringify(DATA.initialState));
+      state = cloneDeep(DATA.initialState);
+      historyStack = [];
       render();
     }
 
+    undoBtnEl.addEventListener('click', undoLastDecision);
+
+    appTitleEl.title = `Aktueller Knoten: ${state.currentNode}`;
     render();
   </script>
 </body>
